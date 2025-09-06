@@ -24,8 +24,6 @@ load_dotenv()
 
 import os 
 
-if "OPENAI_API_KEY" in st.secrets and not os.getenv("OPENAI_API_KEY"): 
-    os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
 ############################################################
 # 2. 設定関連
@@ -34,6 +32,16 @@ if "OPENAI_API_KEY" in st.secrets and not os.getenv("OPENAI_API_KEY"):
 st.set_page_config(
     page_title=ct.APP_NAME
 )
+
+if "OPENAI_API_KEY" in st.secrets and not os.getenv("OPENAI_API_KEY"): 
+    os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+
+
+import pathlib 
+st.write("DEBUG has API key:", bool(os.getenv("OPENAI_API_KEY"))) 
+data_dir = pathlib.Path("data") 
+st.write( "DEBUG data exists:", data_dir.exists(), "files:", [p.name for p in data_dir.iterdir()] if data_dir.exists() else None )
+
 
 # ログ出力を行うためのロガーの設定
 logger = logging.getLogger(ct.LOGGER_NAME)
